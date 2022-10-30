@@ -39,12 +39,12 @@ resource "aws_route_table" "example" {
 }
 # Resource to create Route Table
 resource "aws_route" "r" {
-  route_table_id            = aws_route_table.example.id
-  destination_cidr_block    = "0.0.0.0/0"
-  gateway_id                = aws_internet_gateway.gw.id
+  route_table_id         = aws_route_table.example.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.gw.id
 }
- 
- resource "aws_route_table_association" "a" {
+
+resource "aws_route_table_association" "a" {
   subnet_id      = aws_subnet.sub.id
   route_table_id = aws_route_table.example.id
 }
@@ -54,20 +54,34 @@ resource "aws_security_group" "allow_tls" {
   description = "Allow TLS inbound traffic"
   vpc_id      = aws_vpc.main.id
 
-  ingress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
+  ingress = [
+     {
+      description      = "egress"
+      from_port        = 0
+      to_port          = 0
+      protocol         = "-1"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = []
+      prefix_list_ids  = []
+      security_groups  = []
+      self             = false
+    }
+  ]
+
+
+  egress = [
+    {
+      description      = "egress"
+      from_port        = 0
+      to_port          = 0
+      protocol         = "-1"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = []
+      prefix_list_ids  = []
+      security_groups  = []
+      self             = false
+    }
+  ]
 
   tags = {
     Name = "allow_tls"
@@ -75,28 +89,28 @@ resource "aws_security_group" "allow_tls" {
 }
 
 resource "aws_key_pair" "deploy" {
-  key_name = "deployhub"
-  public_key = file("hi.pub")
+  key_name   = "deployhub"
+  public_key = file("/home/arnab/.ssh/devenv.pub")
 
 }
 
 resource "aws_instance" "dev" {
-    instance_type = var.instance_type 
-    ami = data.aws_ami.ec2.id
-    key_name = aws_key_pair.deploy.key_name
-    vpc_security_group_ids = [aws_security_group.allow_tls.id]
-    subnet_id = aws_subnet.sub.id
-    user_data = file("userdata.tpl")
-    # associate_public_ip_address = true
-    root_block_device {
-        volume_size = 10
-        volume_type = "gp2"
-        delete_on_termination = true
-    }
+  instance_type          = var.instance_type
+  ami                    = data.aws_ami.ec2.id
+  key_name               = aws_key_pair.deploy.key_name
+  vpc_security_group_ids = [aws_security_group.allow_tls.id]
+  subnet_id              = aws_subnet.sub.id
+  user_data              = file("userdata.tpl")
+  # associate_public_ip_address = true
+  root_block_device {
+    volume_size           = 10
+    volume_type           = "gp2"
+    delete_on_termination = true
+  }
 
 
-    tags = {
-        Name = "dev-node"
-    }
-  
+  tags = {
+    Name = "dev-node"
+  }
+
 }
