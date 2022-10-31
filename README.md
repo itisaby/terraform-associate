@@ -1,6 +1,7 @@
 # Terraform-Associate Practice
 
 In this Repo I will be adding whatever I learn in Terraform <br>
+Fun fact I am liking to work in Terraform using <a href="https://cloud.hashicorp.com/products/terraform">Terraform</a> Cloud than working completely locally. Also in big enterprises they use Terraform Cloud to provision their Infrastructure.
 1. Terraform-Beginner
     - Terraform File Structure
     - Providers in Terraform 
@@ -28,7 +29,7 @@ In this Repo I will be adding whatever I learn in Terraform <br>
 4. Since this is done on AWS so u need to configure the following
     - Have an AWS account
     - Create an IAM user with the required access
-    - Configure AWS CLI.
+    - Configure <a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">AWS CLI</a>.
 
 5. At first run `Terraform Plan` it will show which resources will be created.
 6. Run the Command `terraform apply` which will give a prompt and you can say yes and it will create all the resources. Alternatively you can run `terraform apply -auto-approve`. 
