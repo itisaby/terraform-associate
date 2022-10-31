@@ -19,3 +19,4 @@ In this Repo I will be adding whatever I learn in Terraform <br>
     - SSH into EC2 using rsa key value pair 
     - Using local exec command to SSH into EC2 through VSCODE
     - Remote-SSH Extension to access the EC2 instance
+    - Conditional Statements and Outputs 
