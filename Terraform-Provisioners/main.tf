@@ -71,7 +71,7 @@ resource "aws_security_group" "sg_server" {
 }
 resource "aws_key_pair" "deployer" {
   key_name   = "deployer-key"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC2poTIY1p5bIACiW08z4+UeimhXz9JbUXQAR3LzsuDGendPvrdeTA8fqC/zKqSZAiCxIoO+hciTQbqpWJqA+dnIzZeB7cvIo8TQ3SAUDaRlQoL9FfnxXIUYcm9euFbX0BT1Yuqh10iPoXHbuAMOjq0qtFX3An0EOuFeW01uZAojwFf4qB0amqne0vmqEP1Qy6eoxGzzslIPCVK/FLRg2kh1kNrsTfkgmMSAk4dbDVp4AwuygKGe8tV0Df9YJz2uisrXkhKq7fJWUcOyZptM6dhAv1jfirTbJtmz1fsjybl5hBvmeqFlODo20b4qjQECQcI2y/l39tSwVN26AWTKV1q0j2BbMuk2qZFOtQp5KII3W9Oc7RQPy2dFgZzHpCN5TxrJyPmmQpCCkJGA/aCq9WlnylLbyQOQ75pTp5wN3L4mBMDciYAGsaGncgplZvWoYyq95j9csDKB9vj8mzz7KsPGbjlDXPhEi8n32rDGbhiTu5UzmxNEQNPPMDTQN1NbQc= arnab@arnab-HP-Pavilion-x360-Convertible-14-dh1xxx"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDQ9W674jBsh2tEI10Xt/7YQAvzWbvACxg2lAi1pQB7qmmTlg3xqbS8eHYXlRWYRocUln/2s4aa/etWFBXDSJgmOt1tJ9UTwNJMxT6IaULE3T1/gnavcV3oQYtBmijbDXdP9/MB84i1nP2g+xQnTc4fpUyzSzVrPEw71M+EWfr6WOrQI8bH8k6wTsTX0WKXP0SAtLXTKvbgW6LNx+SY9j7FJ3qagNAxqb6b0XBe5fityO4e2buGOaft8Rh5yUQAhJbPTN/ha6tNmUfNP1GEFmyAWtmdV5+OZYRdoNP8lBM3t9eD6QJGJRI9JtKcbNHw27ZPunjWsqx05EjmjLixYaeY0TlLMl1PkmrDAI7hndw/d7xxK9MqALUbOBaFH8Cwm3i4wd90Ppy10zLRmbPW65kb4FenCUkAiF8L4HozEslJH0M9abrnmP1FVinGh1+YuvD8g5MWCajKwnIJzG8PcWE1VutGTG1LXohjMclOVJSWCHHIV46q8M8b9q/g+xK6Lws= arnab@arnab-HP-Pavilion-x360-Convertible-14-dh1xxx"
 }
 
 data "template_file" "user_data" {
@@ -83,8 +83,8 @@ resource "aws_instance" "app_server" {
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.sg_server.id]
   #   count         = 2
-  user_data = data.template_file.user_data.rendered
   key_name  = aws_key_pair.deployer.key_name
+  user_data = data.template_file.user_data.rendered
   tags = {
     Name = "arnab"
   }
