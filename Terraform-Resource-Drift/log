@@ -1,0 +1,20 @@
+2022-12-16T22:41:24.159+0530 [INFO]  Terraform version: 1.3.6
+2022-12-16T22:41:24.160+0530 [DEBUG] using github.com/hashicorp/go-tfe v1.9.0
+2022-12-16T22:41:24.160+0530 [DEBUG] using github.com/hashicorp/hcl/v2 v2.15.0
+2022-12-16T22:41:24.160+0530 [DEBUG] using github.com/hashicorp/terraform-config-inspect v0.0.0-20210209133302-4fd17a0faac2
+2022-12-16T22:41:24.160+0530 [DEBUG] using github.com/hashicorp/terraform-svchost v0.0.0-20200729002733-f050f53b9734
+2022-12-16T22:41:24.160+0530 [DEBUG] using github.com/zclconf/go-cty v1.12.1
+2022-12-16T22:41:24.160+0530 [INFO]  Go runtime version: go1.19.3
+2022-12-16T22:41:24.160+0530 [INFO]  CLI args: []string{"terraform", "apply", "-auto-approve"}
+2022-12-16T22:41:24.160+0530 [TRACE] Stdout is a terminal of width 186
+2022-12-16T22:41:24.160+0530 [TRACE] Stderr is a terminal of width 186
+2022-12-16T22:41:24.160+0530 [TRACE] Stdin is a terminal
+2022-12-16T22:41:24.160+0530 [DEBUG] Attempting to open CLI config file: /home/arnab/.terraformrc
+2022-12-16T22:41:24.160+0530 [DEBUG] File doesn't exist, but doesn't need to. Ignoring.
+2022-12-16T22:41:24.160+0530 [DEBUG] ignoring non-existing provider search directory terraform.d/plugins
+2022-12-16T22:41:24.160+0530 [DEBUG] ignoring non-existing provider search directory /home/arnab/.terraform.d/plugins
+2022-12-16T22:41:24.160+0530 [DEBUG] ignoring non-existing provider search directory /home/arnab/.local/share/terraform/plugins
+2022-12-16T22:41:24.160+0530 [DEBUG] ignoring non-existing provider search directory /usr/share/ubuntu/terraform/plugins
+2022-12-16T22:41:24.160+0530 [DEBUG] ignoring non-existing provider search directory /usr/local/share/terraform/plugins
+2022-12-16T22:41:24.160+0530 [DEBUG] ignoring non-existing provider search directory /usr/share/terraform/plugins
+2022-12-16T22:41:24.160+0530 [DEBUG] ignoring non-existing provider search directory /var/lib/snapd/desktop/terraform/plugins

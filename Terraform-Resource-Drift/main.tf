@@ -28,6 +28,7 @@ resource "aws_instance" "our_server" {
 
 }
 
+
 output "public_ip" {
   value = aws_instance.our_server.public_ip
   # sensitive = true
