@@ -1,0 +1,211 @@
+import "strings"
+import "types"
+
+outputs = {}
+
+_modules = {
+	"root": {
+		"data":      {},
+		"path":      [],
+		"resources": {},
+	},
+
+	"module.apache": {
+		"data": {
+			"aws_ami": {
+				"amazon-linux-2": {
+					0: {
+						"attr": {
+							"architecture": "x86_64",
+							"arn":          "arn:aws:ec2:us-east-1::image/ami-0fe472d8a85bc7b0e",
+							"block_device_mappings": [
+								{
+									"device_name": "/dev/xvda",
+									"ebs": {
+										"delete_on_termination": "true",
+										"encrypted":             "false",
+										"iops":                  "0",
+										"snapshot_id":           "snap-07f96a026c914c20a",
+										"throughput":            "0",
+										"volume_size":           "8",
+										"volume_type":           "gp2",
+									},
+									"no_device":    "",
+									"virtual_name": "",
+								},
+							],
+							"boot_mode":        "",
+							"creation_date":    "2022-12-16T01:56:15.000Z",
+							"deprecation_time": "2024-12-16T01:56:14.000Z",
+							"description":      "Amazon Linux 2 AMI 2.0.20221210.1 x86_64 HVM gp2",
+							"ena_support":      true,
+							"executable_users": null,
+							"filter": [
+								{
+									"name": "name",
+									"values": [
+										"amzn2-ami-hvm*",
+									],
+								},
+								{
+									"name": "owner-alias",
+									"values": [
+										"amazon",
+									],
+								},
+							],
+							"hypervisor":         "xen",
+							"id":                 "ami-0fe472d8a85bc7b0e",
+							"image_id":           "ami-0fe472d8a85bc7b0e",
+							"image_location":     "amazon/amzn2-ami-hvm-2.0.20221210.1-x86_64-gp2",
+							"image_owner_alias":  "amazon",
+							"image_type":         "machine",
+							"imds_support":       "",
+							"include_deprecated": false,
+							"kernel_id":          "",
+							"most_recent":        true,
+							"name":               "amzn2-ami-hvm-2.0.20221210.1-x86_64-gp2",
+							"name_regex":         null,
+							"owner_id":           "137112412989",
+							"owners": [
+								"amazon",
+							],
+							"platform":          "",
+							"platform_details":  "Linux/UNIX",
+							"product_codes":     [],
+							"public":            true,
+							"ramdisk_id":        "",
+							"root_device_name":  "/dev/xvda",
+							"root_device_type":  "ebs",
+							"root_snapshot_id":  "snap-07f96a026c914c20a",
+							"sriov_net_support": "simple",
+							"state":             "available",
+							"state_reason": {
+								"code":    "UNSET",
+								"message": "UNSET",
+							},
+							"tags":                {},
+							"timeouts":            null,
+							"tpm_support":         "",
+							"usage_operation":     "RunInstances",
+							"virtualization_type": "hvm",
+						},
+						"depends_on": [],
+						"id":         "ami-0fe472d8a85bc7b0e",
+						"tainted":    false,
+					},
+				},
+			},
+			"aws_subnet_ids": {
+				"subnet_id": {
+					0: {
+						"attr": {
+							"filter": null,
+							"id":     "vpc-0af72937237702351",
+							"ids": [
+								"subnet-0133722cc8005c126",
+								"subnet-0166317af34b0e397",
+								"subnet-034a6dba6fdd8a390",
+								"subnet-0a1222f8b1d6cf3d0",
+								"subnet-0cea6048f0eed44c1",
+								"subnet-0dbf755e9cb5d7096",
+							],
+							"tags":     null,
+							"timeouts": null,
+							"vpc_id":   "vpc-0af72937237702351",
+						},
+						"depends_on": [],
+						"id":         "vpc-0af72937237702351",
+						"tainted":    false,
+					},
+				},
+			},
+			"aws_vpc": {
+				"main": {
+					0: {
+						"attr": {
+							"arn":        "arn:aws:ec2:us-east-1:219634475281:vpc/vpc-0af72937237702351",
+							"cidr_block": "172.31.0.0/16",
+							"cidr_block_associations": [
+								{
+									"association_id": "vpc-cidr-assoc-03aed4e379a7f431a",
+									"cidr_block":     "172.31.0.0/16",
+									"state":          "associated",
+								},
+							],
+							"default":                              true,
+							"dhcp_options_id":                      "dopt-0cbfee6756d96c76d",
+							"enable_dns_hostnames":                 true,
+							"enable_dns_support":                   true,
+							"enable_network_address_usage_metrics": false,
+							"filter":              null,
+							"id":                  "vpc-0af72937237702351",
+							"instance_tenancy":    "default",
+							"ipv6_association_id": "",
+							"ipv6_cidr_block":     "",
+							"main_route_table_id": "rtb-0d1a20b6f787a44d4",
+							"owner_id":            "219634475281",
+							"state":               null,
+							"tags":                {},
+							"timeouts":            null,
+						},
+						"depends_on": [],
+						"id":         "vpc-0af72937237702351",
+						"tainted":    false,
+					},
+				},
+			},
+			"template_file": {
+				"user_data": {
+					0: {
+						"attr": {
+							"filename": null,
+							"id":       "7c32e0ab4bb3941ae7edc7b7d247911e9636cba9a5ad857986ce54abeee3c647",
+							"rendered": "#cloud-config\npackages:\n  - httpd\nruncmd:\n  - sudo systemctl start httpd\n  - sudo systemctl enable httpd",
+							"template": "#cloud-config\npackages:\n  - httpd\nruncmd:\n  - sudo systemctl start httpd\n  - sudo systemctl enable httpd",
+							"vars":     null,
+						},
+						"depends_on": [],
+						"id":         "7c32e0ab4bb3941ae7edc7b7d247911e9636cba9a5ad857986ce54abeee3c647",
+						"tainted":    false,
+					},
+				},
+			},
+		},
+		"path": [
+			"apache",
+		],
+		"resources": {},
+	},
+}
+
+module_paths = [
+	[],
+	[
+		"apache",
+	],
+]
+
+terraform_version = "1.3.6"
+
+module = func(path) {
+	if types.type_of(path) is not "list" {
+		error("expected list, got", types.type_of(path))
+	}
+
+	if length(path) < 1 {
+		return _modules.root
+	}
+
+	addr = []
+	for path as p {
+		append(addr, "module")
+		append(addr, p)
+	}
+
+	return _modules[strings.join(addr, ".")]
+}
+
+data = _modules.root.data
+path = _modules.root.path
+resources = _modules.root.resources

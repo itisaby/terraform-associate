@@ -1,0 +1,433 @@
+import "strings"
+
+providers = {
+	"aws": {
+		"alias": "",
+		"config": {
+			"region": {
+				"constant_value": "us-east-1",
+			},
+		},
+		"full_name":           "registry.terraform.io/hashicorp/aws",
+		"module_address":      "",
+		"name":                "aws",
+		"provider_config_key": "aws",
+		"version_constraint":  "",
+	},
+	"module.apache:template": {
+		"alias":               "",
+		"config":              {},
+		"full_name":           "registry.terraform.io/hashicorp/template",
+		"module_address":      "module.apache",
+		"name":                "template",
+		"provider_config_key": "module.apache:template",
+		"version_constraint":  "",
+	},
+}
+
+resources = {
+	"aws_s3_bucket.name": {
+		"address": "aws_s3_bucket.name",
+		"config": {
+			"bucket": {
+				"constant_value": "arnab-terraform21323",
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "name",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_s3_bucket",
+	},
+	"module.apache.aws_instance.app_server": {
+		"address": "module.apache.aws_instance.app_server",
+		"config": {
+			"ami": {
+				"references": [
+					"data.aws_ami.amazon-linux-2.id",
+					"data.aws_ami.amazon-linux-2",
+				],
+			},
+			"instance_type": {
+				"references": [
+					"var.instance_type",
+				],
+			},
+			"key_name": {
+				"references": [
+					"aws_key_pair.deployer.key_name",
+					"aws_key_pair.deployer",
+				],
+			},
+			"subnet_id": {
+				"references": [
+					"data.aws_subnet_ids.subnet_id.ids",
+					"data.aws_subnet_ids.subnet_id",
+				],
+			},
+			"tags": {
+				"references": [
+					"var.server_name",
+				],
+			},
+			"user_data": {
+				"references": [
+					"data.template_file.user_data.rendered",
+					"data.template_file.user_data",
+				],
+			},
+			"vpc_security_group_ids": {
+				"references": [
+					"aws_security_group.sg_server.id",
+					"aws_security_group.sg_server",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "module.apache",
+		"name":                "app_server",
+		"provider_config_key": "module.apache:aws",
+		"provisioners":        [],
+		"type":                "aws_instance",
+	},
+	"module.apache.aws_key_pair.deployer": {
+		"address": "module.apache.aws_key_pair.deployer",
+		"config": {
+			"key_name": {
+				"constant_value": "deployer-key",
+			},
+			"public_key": {
+				"references": [
+					"var.public_key",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "module.apache",
+		"name":                "deployer",
+		"provider_config_key": "module.apache:aws",
+		"provisioners":        [],
+		"type":                "aws_key_pair",
+	},
+	"module.apache.aws_security_group.sg_server": {
+		"address": "module.apache.aws_security_group.sg_server",
+		"config": {
+			"description": {
+				"constant_value": "Security Groups",
+			},
+			"egress": {
+				"constant_value": [
+					{
+						"cidr_blocks": [
+							"0.0.0.0/0",
+						],
+						"description": "All Outbound",
+						"from_port":   0,
+						"ipv6_cidr_blocks": [
+							"::/0",
+						],
+						"prefix_list_ids": [],
+						"protocol":        "-1",
+						"security_groups": [],
+						"self":            false,
+						"to_port":         0,
+					},
+				],
+			},
+			"ingress": {
+				"constant_value": [
+					{
+						"cidr_blocks": [
+							"0.0.0.0/0",
+						],
+						"description": "HTTP",
+						"from_port":   80,
+						"ipv6_cidr_blocks": [
+							"::/0",
+						],
+						"prefix_list_ids": [],
+						"protocol":        "tcp",
+						"security_groups": [],
+						"self":            false,
+						"to_port":         80,
+					},
+					{
+						"cidr_blocks": [
+							"0.0.0.0/0",
+						],
+						"description": "SSH",
+						"from_port":   22,
+						"ipv6_cidr_blocks": [
+							"::/0",
+						],
+						"prefix_list_ids": [],
+						"protocol":        "tcp",
+						"security_groups": [],
+						"self":            false,
+						"to_port":         22,
+					},
+				],
+			},
+			"name": {
+				"constant_value": "allow_tls",
+			},
+			"tags": {
+				"constant_value": {
+					"Name": "allow_tls",
+				},
+			},
+			"vpc_id": {
+				"references": [
+					"data.aws_vpc.main.id",
+					"data.aws_vpc.main",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "module.apache",
+		"name":                "sg_server",
+		"provider_config_key": "module.apache:aws",
+		"provisioners":        [],
+		"type":                "aws_security_group",
+	},
+	"module.apache.data.aws_ami.amazon-linux-2": {
+		"address": "module.apache.data.aws_ami.amazon-linux-2",
+		"config": {
+			"filter": [
+				{
+					"name": {
+						"constant_value": "owner-alias",
+					},
+					"values": {
+						"constant_value": [
+							"amazon",
+						],
+					},
+				},
+				{
+					"name": {
+						"constant_value": "name",
+					},
+					"values": {
+						"constant_value": [
+							"amzn2-ami-hvm*",
+						],
+					},
+				},
+			],
+			"most_recent": {
+				"constant_value": true,
+			},
+			"owners": {
+				"constant_value": [
+					"amazon",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "data",
+		"module_address":      "module.apache",
+		"name":                "amazon-linux-2",
+		"provider_config_key": "module.apache:aws",
+		"provisioners":        [],
+		"type":                "aws_ami",
+	},
+	"module.apache.data.aws_subnet_ids.subnet_id": {
+		"address": "module.apache.data.aws_subnet_ids.subnet_id",
+		"config": {
+			"vpc_id": {
+				"references": [
+					"data.aws_vpc.main.id",
+					"data.aws_vpc.main",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "data",
+		"module_address":      "module.apache",
+		"name":                "subnet_id",
+		"provider_config_key": "module.apache:aws",
+		"provisioners":        [],
+		"type":                "aws_subnet_ids",
+	},
+	"module.apache.data.aws_vpc.main": {
+		"address": "module.apache.data.aws_vpc.main",
+		"config": {
+			"id": {
+				"references": [
+					"var.vpc_id",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "data",
+		"module_address":      "module.apache",
+		"name":                "main",
+		"provider_config_key": "module.apache:aws",
+		"provisioners":        [],
+		"type":                "aws_vpc",
+	},
+	"module.apache.data.template_file.user_data": {
+		"address": "module.apache.data.template_file.user_data",
+		"config": {
+			"template": {
+				"references": [
+					"path.module",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "data",
+		"module_address":      "module.apache",
+		"name":                "user_data",
+		"provider_config_key": "module.apache:template",
+		"provisioners":        [],
+		"type":                "template_file",
+	},
+}
+
+provisioners = {}
+
+variables = {
+	"instance_type": {
+		"default":        null,
+		"description":    "",
+		"module_address": "",
+		"name":           "instance_type",
+	},
+	"module.apache:instance_type": {
+		"default":        "t2.micro",
+		"description":    "",
+		"module_address": "module.apache",
+		"name":           "instance_type",
+	},
+	"module.apache:public_key": {
+		"default":        null,
+		"description":    "",
+		"module_address": "module.apache",
+		"name":           "public_key",
+	},
+	"module.apache:server_name": {
+		"default":        "apache-server",
+		"description":    "",
+		"module_address": "module.apache",
+		"name":           "server_name",
+	},
+	"module.apache:vpc_id": {
+		"default":        null,
+		"description":    "",
+		"module_address": "module.apache",
+		"name":           "vpc_id",
+	},
+	"public_key": {
+		"default":        null,
+		"description":    "",
+		"module_address": "",
+		"name":           "public_key",
+	},
+	"server_name": {
+		"default":        null,
+		"description":    "",
+		"module_address": "",
+		"name":           "server_name",
+	},
+	"vpc_id": {
+		"default":        null,
+		"description":    "",
+		"module_address": "",
+		"name":           "vpc_id",
+	},
+}
+
+outputs = {
+	"module.apache:public_ip": {
+		"depends_on":     [],
+		"description":    "",
+		"module_address": "module.apache",
+		"name":           "public_ip",
+		"sensitive":      false,
+		"value": {
+			"references": [
+				"aws_instance.app_server.public_ip",
+				"aws_instance.app_server",
+			],
+		},
+	},
+	"name": {
+		"depends_on":     [],
+		"description":    "",
+		"module_address": "",
+		"name":           "name",
+		"sensitive":      false,
+		"value": {
+			"references": [
+				"module.apache.public_ip",
+				"module.apache",
+			],
+		},
+	},
+}
+
+module_calls = {
+	"apache": {
+		"config": {
+			"instance_type": {
+				"references": [
+					"var.instance_type",
+				],
+			},
+			"public_key": {
+				"references": [
+					"var.public_key",
+				],
+			},
+			"server_name": {
+				"references": [
+					"var.server_name",
+				],
+			},
+			"vpc_id": {
+				"references": [
+					"var.vpc_id",
+				],
+			},
+		},
+		"count":              {},
+		"depends_on":         [],
+		"for_each":           {},
+		"module_address":     "",
+		"name":               "apache",
+		"source":             "itisaby/apache/aws",
+		"version_constraint": "",
+	},
+}
+
+strip_index = func(addr) {
+	s = strings.split(addr, ".")
+	for s as i, v {
+		s[i] = strings.split(v, "[")[0]
+	}
+
+	return strings.join(s, ".")
+}
